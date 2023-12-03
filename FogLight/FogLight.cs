@@ -12,11 +12,11 @@ namespace FogLight
         public override string ModAuthor => "Leaxx";
         public override string ModDescription => "Adds an optional extra fog light for the Laika.";
         public override string ModVersion => "1.0";
-        public override string GitHubLink => "";
+        public override string GitHubLink => "https://github.com/Jalopy-Mods/FogLight";
         public override WhenToInit WhenToInit => WhenToInit.InGame;
         public override List<(string, string, string)> Dependencies => new List<(string, string, string)>()
         {
-            ("JaLoader", "Leaxx", "2.0.0")
+            ("JaLoader", "Leaxx", "2.0.1")
         };
 
         public override bool UseAssets => true;
@@ -47,9 +47,12 @@ namespace FogLight
             lightObject.transform.localEulerAngles = new Vector3(85, 95, -90);
             lightObject.transform.localScale = new Vector3(3f, 8f, 12f);
 
+            var script = lightObject.AddComponent<FogLightObject>();
+            script.lightMaterial = lightMaterial;
+
             ModHelper.Instance.CreateIconForExtra(lightObject, new Vector3(), lightObject.transform.localScale, new Vector3(70, 0, -60), "FogLight");
 
-            CustomObjectsManager.Instance.RegisterObject(ModHelper.Instance.CreateExtraObject(lightObject, BoxSizes.Small, "Fog Light", "Fog light", 50, 1, "FogLight", AttachExtraTo.Body), "FogLight");
+            CustomObjectsManager.Instance.RegisterObject(ModHelper.Instance.CreateExtraObject(lightObject, BoxSizes.Small, "Fog Light", "A fog light. Helps visibility in foggy or dark situations.", 50, 1, "FogLight", AttachExtraTo.Body), "FogLight");
         }
 
         public override void OnEnable()
@@ -70,29 +73,42 @@ namespace FogLight
         public override void Update()
         {
             base.Update();
-
-            if (Input.GetKeyDown(KeyCode.V))
-            {
-                Console.Instance.Log(lightMaterial.name);
-                Console.Instance.Log(lightMaterial.shader.name);
-                Material[] mats = lightObject.GetComponent<MeshRenderer>().materials;
-                mats[1] = lightMaterial;
-                lightObject.GetComponent<MeshRenderer>().materials = mats;
-                lightObject.transform.Find("LightHolder").gameObject.SetActive(true);
-            }
-            
-            if(Input.GetKeyUp(KeyCode.V))
-            {
-                Material[] mats = lightObject.GetComponent<MeshRenderer>().materials;
-                mats[1] = lightObject.GetComponent<MeshRenderer>().materials[0];
-                lightObject.GetComponent<MeshRenderer>().materials = mats;
-                lightObject.transform.Find("LightHolder").gameObject.SetActive(false);
-            }
         }
 
         public override void OnDisable()
         {
             base.OnDisable();
+        }
+    }
+
+    public class FogLightObject : MonoBehaviour
+    {
+        private CarLogicC carLogic;
+        public Material lightMaterial;
+        private MeshRenderer renderer;
+
+        private void Start()
+        {
+            carLogic = FindObjectOfType<CarLogicC>();
+            renderer = gameObject.GetComponent<MeshRenderer>();
+        }
+
+        private void Update()
+        {
+            if (carLogic.headlightsOn)
+            {
+                Material[] mats = renderer.materials;
+                mats[1] = lightMaterial;
+                renderer.materials = mats;
+                gameObject.transform.Find("LightHolder").gameObject.SetActive(true);
+            }
+            else
+            {
+                Material[] mats = renderer.materials;
+                mats[1] = renderer.materials[0];
+                renderer.materials = mats;
+                gameObject.transform.Find("LightHolder").gameObject.SetActive(false);
+            }
         }
     }
 }

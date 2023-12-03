@@ -9,3 +9,7 @@ This mod adds a fog light to the Laika! It attaches to the rear bumper, and can 
 * **This requires that the `Enable JaDownloader` setting in `Modloader Options/Preferences` in-game is set to `Yes`**
 * Open this link in a browser:
 * `jaloader://install/jalopy-mods/FogLight`
+
+# Images
+![image](https://github.com/Jalopy-Mods/FogLight/assets/101940826/05ab6058-b28a-4d41-96f7-c30a05380037)
+![image](https://github.com/Jalopy-Mods/FogLight/assets/101940826/f14229aa-219e-4934-baef-c5bbaa13f48d)

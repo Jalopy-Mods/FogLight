@@ -1,6 +1,7 @@
 # FogLight
 
 [![](https://img.shields.io/github/downloads/Jalopy-Mods/FogLight/total)](#)
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/A0A8OGPIQ)
 
 This mod adds a fog light to the Laika! It attaches to the rear bumper, and can be bought in the Laika Dealership.
 

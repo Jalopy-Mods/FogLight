@@ -9,7 +9,7 @@ namespace FogLight
     {
         public override string ModID => "FogLight";
         public override string ModName => "Fog Light";
-        public override string ModAuthor => "Leaxx";
+        public override string ModAuthor => "Leaxx, itisgt";
         public override string ModDescription => "Adds optional extra fog lights for the Laika.";
         public override string ModVersion => "2.0";
         public override string GitHubLink => "https://github.com/Jalopy-Mods/FogLight";
